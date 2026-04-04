@@ -39,7 +39,7 @@ double randamentMediu ( Node *head, int N )
         suma=suma+curent->randament;
         curent=curent->next;
     }
-    return suma/(N-1);
+    return suma/N;
 }
 
 //calculam volatilitatea
@@ -57,7 +57,17 @@ double volat (Node *head, int N, double mu)
     }
 
     //calculam formula finala
-    return sqrt(suma/(N-1));
+    return sqrt(suma/N);
+}
+
+void freeList(Node *head)
+{
+    Node *aux;
+    while(head!=NULL) {
+        aux=head;
+        head=head->next;
+        free(aux);
+    }
 }
 
 int main(int argc, char *argv[])
@@ -76,8 +86,8 @@ int main(int argc, char *argv[])
     for(int i=0;i<N;i++)
     {
         double val;
-        fscanf(fin, "%lf", &val);
-        addAtEnd(&head, val);
+        if(fscanf(fin, "%lf", &val)==1)
+            addAtEnd(&head, val);
 
     }
 
@@ -85,10 +95,11 @@ int main(int argc, char *argv[])
     double sigma=volat(head, N, mu);
     double sharpeRatio = mu/sigma;
 
-    fprintf(fout, "%.3f\n", (long)(mu * 1000) / 1000.0);
-    fprintf(fout, "%.3f\n", (long)(sigma * 1000) / 1000.0);
-    fprintf(fout, "%.3f\n", (long)(sharpeRatio * 1000) / 1000.0);
+    fprintf(fout, "%.3f\n", mu);
+    fprintf(fout, "%.3f\n", sigma);
+    fprintf(fout, "%.3f\n", sharpeRatio);
 
+    freeList(head);
     fclose(fin);
     fclose(fout);
     return 0;
