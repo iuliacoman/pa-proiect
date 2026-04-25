@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include<math.h>
+#include<ctype.h>
 #include<limits.h>
 
 //implementare stiva
@@ -85,6 +86,20 @@ void verificare(int zi, double p1, double p2, double p3, char *nume1, char *nume
         enqueue(q,zi,fabs(p1-p2),nume1);
 }
 
+void citirePiata(FILE *fin, Node **top, char *nume){
+    char buffer[50];
+    while(fscanf(fin,"%s",buffer)!=EOF){
+        if(isdigit(buffer[0]))
+            push(top,atof(buffer));
+        else
+            {
+                strcpy(nume,buffer);
+                return;
+            }
+    }
+    nume[0]='\0';
+}
+
 int main(int argc, char *argv[])
 {
     if(argc<3) return 1;
@@ -93,33 +108,40 @@ int main(int argc, char *argv[])
     FILE *fout=fopen(argv[2],"w");
     if(!fin || !fout) return 1;
 
-    char nume1[30], nume2[30], nume3[30];
-    fscanf(fin, "%s %s %s", nume1, nume2, nume3);
+    char nume1[30], nume2[30], nume3[30], temp[30];
 
     Node *s1=NULL, *s2=NULL, *s3=NULL;
-    double p1, p2, p3;
-    int totZile=0;
+    //double p1, p2, p3;
 
-    while(fscanf(fin,"%lf %lf %lf", &p1, &p2, &p3)==3){
+    //citire piata 1
+    if(fscanf(fin,"%s",nume1)!=EOF)
+        citirePiata(fin,&s1,nume2);
+    //citire piata 2 si 3
+    citirePiata(fin,&s2,nume3);
+    citirePiata(fin,&s3,temp);
+
+    /*while(fscanf(fin,"%lf %lf %lf", &p1, &p2, &p3)==3){
         push(&s1,p1);
         push(&s2,p2);
         push(&s3,p3);
         totZile++;
-    }
+    }*/
 
     Queue q={NULL,NULL};
 
-    //parcurgem stiva de la ultima zi pana la prima zi
-    for(int i=totZile;i>=1;i--){
-        double v1=pop(&s1);
-        double v2=pop(&s2);
-        double v3=pop(&s3);
-        verificare(i,v1,v2,v3,nume1,nume2,nume3,&q);
+    int zi=1;
+    //parcurgem stiva 
+    while(s1!=NULL && s2!=NULL && s3!=NULL){
+        double p1=pop(&s1);
+        double p2=pop(&s2);
+        double p3=pop(&s3);
+        verificare(zi,p1,p2,p3,nume1,nume2,nume3,&q);
+        zi++;
     }
 
     //afisam rezultatele in coada
     while(q.front!=NULL){
-        fprintf(fout, "ziua %d - %.0f - %s\n", q.front->val.zi, q.front->val.dif, q.front->val.nume);
+        fprintf(fout, "ziua %d  %.0f  %s\n", q.front->val.zi, q.front->val.dif, q.front->val.nume);
         qNode *temp=q.front;
         q.front=q.front->next;
         free(temp);
