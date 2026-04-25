@@ -120,21 +120,18 @@ int main(int argc, char *argv[])
     citirePiata(fin,&s2,nume3);
     citirePiata(fin,&s3,temp);
 
-    /*while(fscanf(fin,"%lf %lf %lf", &p1, &p2, &p3)==3){
-        push(&s1,p1);
-        push(&s2,p2);
-        push(&s3,p3);
-        totZile++;
-    }*/
-
+    Node *s1_f=NULL, *s2_f=NULL, *s3_f=NULL;
+    while(!isEmpty(s1)) push(&s1_f,pop(&s1));
+    while(!isEmpty(s2)) push(&s1_f,pop(&s2));
+    while(!isEmpty(s3)) push(&s1_f,pop(&s3));
     Queue q={NULL,NULL};
 
     int zi=1;
     //parcurgem stiva 
-    while(s1!=NULL && s2!=NULL && s3!=NULL){
-        double p1=pop(&s1);
-        double p2=pop(&s2);
-        double p3=pop(&s3);
+    while(s1_f!=NULL && s2_f!=NULL && s3_f!=NULL){
+        double p1=pop(&s1_f);
+        double p2=pop(&s2_f);
+        double p3=pop(&s3_f);
         verificare(zi,p1,p2,p3,nume1,nume2,nume3,&q);
         zi++;
     }
@@ -149,8 +146,8 @@ int main(int argc, char *argv[])
 
     fclose(fin);
     fclose(fout);
-    while(s1) pop(&s1);
-    while(s2) pop(&s2);
-    while(s3) pop(&s3);
+    while(s1_f) pop(&s1_f);
+    while(s2_f) pop(&s2_f);
+    while(s3_f) pop(&s3_f);
     return 0;
 }
