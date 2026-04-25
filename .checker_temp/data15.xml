@@ -12,8 +12,8 @@
   <line>Command: /mnt/c/Users/iulia/Desktop/project-data-main/gigiquant/test /mnt/c/Users/iulia/Desktop/project-data-main/gigiquant/in/data15.in /mnt/c/Users/iulia/Desktop/project-data-main/gigiquant/out/data15.out</line>
 </preamble>
 
-<pid>1376</pid>
-<ppid>1351</ppid>
+<pid>15623</pid>
+<ppid>15597</ppid>
 <tool>memcheck</tool>
 
 <args>
@@ -32,13 +32,96 @@
 
 <status>
   <state>RUNNING</state>
-  <time>00:00:00:00.117 </time>
+  <time>00:00:00:00.111 </time>
 </status>
+
+<fatal_signal>
+  <tid>1</tid>
+  <signo>6</signo>
+  <signame>SIGABRT</signame>
+  <sicode>-6</sicode>
+  <stack>
+    <frame>
+      <ip>0x48FDB2C</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libc.so.6</obj>
+      <fn>__pthread_kill_implementation</fn>
+      <dir>./nptl/./nptl</dir>
+      <file>pthread_kill.c</file>
+      <line>44</line>
+    </frame>
+    <frame>
+      <ip>0x48FDB2C</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libc.so.6</obj>
+      <fn>__pthread_kill_internal</fn>
+      <dir>./nptl/./nptl</dir>
+      <file>pthread_kill.c</file>
+      <line>78</line>
+    </frame>
+    <frame>
+      <ip>0x48FDB2C</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libc.so.6</obj>
+      <fn>pthread_kill@@GLIBC_2.34</fn>
+      <dir>./nptl/./nptl</dir>
+      <file>pthread_kill.c</file>
+      <line>89</line>
+    </frame>
+    <frame>
+      <ip>0x48A427D</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libc.so.6</obj>
+      <fn>raise</fn>
+      <dir>./signal/../sysdeps/posix</dir>
+      <file>raise.c</file>
+      <line>26</line>
+    </frame>
+    <frame>
+      <ip>0x48878FE</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libc.so.6</obj>
+      <fn>abort</fn>
+      <dir>./stdlib/./stdlib</dir>
+      <file>abort.c</file>
+      <line>79</line>
+    </frame>
+    <frame>
+      <ip>0x48887B5</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libc.so.6</obj>
+      <fn>__libc_message_impl.cold</fn>
+      <dir>./libio/../sysdeps/posix</dir>
+      <file>libc_fatal.c</file>
+      <line>134</line>
+    </frame>
+    <frame>
+      <ip>0x4995C48</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libc.so.6</obj>
+      <fn>__fortify_fail</fn>
+      <dir>./debug/./debug</dir>
+      <file>fortify_fail.c</file>
+      <line>24</line>
+    </frame>
+    <frame>
+      <ip>0x4996ED3</ip>
+      <obj>/usr/lib/x86_64-linux-gnu/libc.so.6</obj>
+      <fn>__stack_chk_fail</fn>
+      <dir>./debug/./debug</dir>
+      <file>stack_chk_fail.c</file>
+      <line>24</line>
+    </frame>
+    <frame>
+      <ip>0x109663</ip>
+      <obj>/mnt/c/Users/iulia/Desktop/project-data-main/gigiquant/test</obj>
+      <fn>citirePiata</fn>
+    </frame>
+    <frame>
+      <ip>0x109777</ip>
+      <obj>/mnt/c/Users/iulia/Desktop/project-data-main/gigiquant/test</obj>
+      <fn>main</fn>
+    </frame>
+  </stack>
+</fatal_signal>
 
 
 <status>
   <state>FINISHED</state>
-  <time>00:00:00:01.632 </time>
+  <time>00:00:00:01.577 </time>
 </status>
 
 <errorcounts>
