@@ -1,6 +1,6 @@
 #include "task1.h"
 
-int main(int argc, char *argv[])
+/*int main_t1(int argc, char *argv[])
 {
     if(argc<3) return 1;
     FILE *fin = fopen(argv[1],"r");
@@ -34,4 +34,4 @@ int main(int argc, char *argv[])
     fclose(fin);
     fclose(fout);
     return 0;
-}
+}*/
