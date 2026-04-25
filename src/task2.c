@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
 
     //afisam rezultatele in coada
     while(q.front!=NULL){
-        fprintf(fout, "ziua %d  %.0f  %s\n", q.front->val.zi, q.front->val.dif, q.front->val.nume);
+        fprintf(fout, "ziua %d  %.3f  %s\n", q.front->val.zi, q.front->val.dif, q.front->val.nume);
         qNode *temp=q.front;
         q.front=q.front->next;
         free(temp);
@@ -149,5 +149,8 @@ int main(int argc, char *argv[])
 
     fclose(fin);
     fclose(fout);
+    while(s1) pop(&s1);
+    while(s2) pop(&s2);
+    while(s3) pop(&s3);
     return 0;
 }
