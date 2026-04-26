@@ -54,9 +54,9 @@ double volat (Node *head, int N, double mu)
 
 void freeList(Node *head)
 {
-    Node *aux;
+
     while(head!=NULL) {
-        aux=head;
+        Node *aux=head;
         head=head->next;
         free(aux);
     }
