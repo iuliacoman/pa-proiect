@@ -61,11 +61,10 @@ void verificare(int zi, double p1, double p2, double p3, const char *nume1, cons
 
 void citirePiata(FILE *fin, StackNode **top){
     char buffer[50];
-    long pos;
     while(1){
-        pos = ftell(fin);
+        long pos = ftell(fin);
         if (fscanf(fin,"%49s",buffer)==EOF) break;
-        if (isdigit(buffer[0]))
+        if (buffer[0] >= '0' && buffer[0] <= '9')
             push(top,atof(buffer));
         else
             {
@@ -78,7 +77,9 @@ void citirePiata(FILE *fin, StackNode **top){
 void rezolvareTask2(const char *inputFile, const char *outputFile){
     FILE *fin=fopen(inputFile,"r");
     FILE *fout=fopen(outputFile,"w");
-    if (!fin || !fout) return;
+    if (!fin || !fout) {
+        printf("eroare!!!!");
+        return;}
 
     char nume1[30], nume2[30], nume3[30];
     StackNode *s1=NULL, *s2=NULL, *s3=NULL;
