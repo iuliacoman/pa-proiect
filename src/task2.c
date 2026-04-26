@@ -2,22 +2,22 @@
 #include<ctype.h>
 
 
-int isEmpty(Node *top){
+int isEmpty(StackNode *top){
     return top==NULL;
 }
 
 //adaugare element in stiva
-void push ( Node ** top , double val) {
-    Node * newNode =( Node *) malloc ( sizeof ( Node ));
+void push ( StackNode ** top , double val) {
+    StackNode * newNode =( StackNode *) malloc ( sizeof ( StackNode ));
     newNode->pret=val;
     newNode->next = *top;
     *top= newNode ;
 }
 
 //eliminare element din stiva
-double pop( Node ** top) {
+double pop( StackNode ** top) {
 if ( isEmpty (* top )) return INT_MIN ;
-Node * temp =(* top );
+StackNode * temp =(* top );
 double aux=temp->pret;
 *top =(* top)->next;
 free ( temp );
@@ -59,7 +59,7 @@ void verificare(int zi, double p1, double p2, double p3, char *nume1, char *nume
         enqueue(q,zi,fabs(p1-p2),nume1);
 }
 
-void citirePiata(FILE *fin, Node **top, char *nume){
+void citirePiata(FILE *fin, StackNode **top, char *nume){
     char buffer[50];
     while(fscanf(fin,"%s",buffer)!=EOF){
         if(isdigit(buffer[0]))
@@ -79,7 +79,7 @@ void rezolvareTask2(char *inputFile, char *outputFile){
     if(!fin || !fout) return;
 
     char nume1[30], nume2[30], nume3[30], temp[30];
-    Node *s1=NULL, *s2=NULL, *s3=NULL;
+    StackNode *s1=NULL, *s2=NULL, *s3=NULL;
     //citire piata 1
     if(fscanf(fin,"%s",nume1)!=EOF)
         citirePiata(fin,&s1,nume2);
