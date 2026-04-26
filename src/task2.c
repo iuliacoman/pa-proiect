@@ -24,15 +24,6 @@ free ( temp );
 return aux;
 }
 
-
-/*Queue * createQueue (){
-    Queue *q;
-    q=( Queue *) malloc ( sizeof ( Queue ));
-    if (q== NULL ) return NULL ;
-    q->front =q->rear = NULL ;
-    return q;
-}*/
-
 void enqueue (Queue *q, int zi, double dif, const char *nume)
 {
     qNode *newNode=(qNode*)malloc(sizeof(qNode));
