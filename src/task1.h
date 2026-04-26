@@ -12,3 +12,4 @@ void addAtEnd ( Node ** head , double val);
 double randamentMediu ( Node *head, int N );
 double volat (Node *head, int N, double mu);
 void freeList(Node *head);
+void rezolvareTask1(int argc, char *argv[]);
