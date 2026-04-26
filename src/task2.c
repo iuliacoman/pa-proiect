@@ -33,7 +33,7 @@ return aux;
     return q;
 }*/
 
-void enqueue (Queue *q, int zi, double dif, char *nume)
+void enqueue (Queue *q, int zi, double dif, const char *nume)
 {
     qNode *newNode=(qNode*)malloc(sizeof(qNode));
     newNode->val.zi=zi;
@@ -50,27 +50,29 @@ void enqueue (Queue *q, int zi, double dif, char *nume)
 }
 
 //verificam cele trei cazuri de oportunitate de arbitraj
-void verificare(int zi, double p1, double p2, double p3, char *nume1, char *nume2, char *nume3, Queue *q){
-    if (p1==p2 && p1!=p3)
+void verificare(int zi, double p1, double p2, double p3, const char *nume1, const char *nume2, const char *nume3, Queue *q){
+    if (fabs(p1 - p2) < 0.001 && fabs(p1 - p3) > 0.001)
         enqueue(q,zi,fabs(p3-p1),nume3);
-    else if (p1==p3 && p1!=p2)
+    else if (fabs(p1 - p3) < 0.001 && fabs(p1 - p2) > 0.001)
         enqueue(q,zi,fabs(p2-p1),nume2);
-    else if (p2==p3 && p1!=p2) 
+    else if (fabs(p2 - p3) < 0.001 && fabs(p1 - p2) > 0.001) 
         enqueue(q,zi,fabs(p1-p2),nume1);
 }
 
-void citirePiata(FILE *fin, StackNode **top, char *nume){
+void citirePiata(FILE *fin, StackNode **top){
     char buffer[50];
-    while(fscanf(fin,"%49s",buffer)!=EOF){
+    long pos;
+    while(1){
+        pos = ftell(fin);
+        if (fscanf(fin,"%49s",buffer)==EOF) break;
         if (isdigit(buffer[0]))
             push(top,atof(buffer));
         else
             {
-                strcpy(nume,buffer);
-                return;
+                fseek(fin, pos, SEEK_SET);
+                break;
             }
     }
-    nume[0]='\0';
 }
 
 void rezolvareTask2(const char *inputFile, const char *outputFile){
@@ -78,14 +80,17 @@ void rezolvareTask2(const char *inputFile, const char *outputFile){
     FILE *fout=fopen(outputFile,"w");
     if (!fin || !fout) return;
 
-    char nume1[30], nume2[30], nume3[30], numeAux[30];
+    char nume1[30], nume2[30], nume3[30];
     StackNode *s1=NULL, *s2=NULL, *s3=NULL;
     //citire piata 1
-    if (fscanf(fin,"%s",nume1)!=EOF)
-        citirePiata(fin,&s1,nume2);
-    //citire piata 2 si 3
-    citirePiata(fin,&s2,nume3);
-    citirePiata(fin,&s3,numeAux);
+    if (fscanf(fin,"%29s",nume1)!=EOF)
+        citirePiata(fin,&s1);
+    //citire piata 2
+    if (fscanf(fin,"%29s",nume2)!=EOF)
+        citirePiata(fin,&s2);
+    //citire piata 3
+    if (fscanf(fin,"%29s",nume3)!=EOF)
+        citirePiata(fin,&s3);
 
     Queue q={NULL,NULL};
     int zi=1;
