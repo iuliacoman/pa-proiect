@@ -2,7 +2,7 @@
 #include<ctype.h>
 
 
-int isEmpty(StackNode *top){
+int isEmpty(const StackNode *top){
     return top==NULL;
 }
 
@@ -25,13 +25,13 @@ return aux;
 }
 
 
-Queue * createQueue (){
+/*Queue * createQueue (){
     Queue *q;
     q=( Queue *) malloc ( sizeof ( Queue ));
     if (q== NULL ) return NULL ;
     q->front =q->rear = NULL ;
     return q;
-}
+}*/
 
 void enqueue (Queue *q, int zi, double dif, char *nume)
 {
@@ -61,7 +61,7 @@ void verificare(int zi, double p1, double p2, double p3, char *nume1, char *nume
 
 void citirePiata(FILE *fin, StackNode **top, char *nume){
     char buffer[50];
-    while(fscanf(fin,"%s",buffer)!=EOF){
+    while(fscanf(fin,"%49s",buffer)!=EOF){
         if (isdigit(buffer[0]))
             push(top,atof(buffer));
         else
@@ -73,19 +73,19 @@ void citirePiata(FILE *fin, StackNode **top, char *nume){
     nume[0]='\0';
 }
 
-void rezolvareTask2(char *inputFile, char *outputFile){
+void rezolvareTask2(const char *inputFile, const char *outputFile){
     FILE *fin=fopen(inputFile,"r");
     FILE *fout=fopen(outputFile,"w");
     if (!fin || !fout) return;
 
-    char nume1[30], nume2[30], nume3[30], temp[30];
+    char nume1[30], nume2[30], nume3[30], numeAux[30];
     StackNode *s1=NULL, *s2=NULL, *s3=NULL;
     //citire piata 1
     if (fscanf(fin,"%s",nume1)!=EOF)
         citirePiata(fin,&s1,nume2);
     //citire piata 2 si 3
     citirePiata(fin,&s2,nume3);
-    citirePiata(fin,&s3,temp);
+    citirePiata(fin,&s3,numeAux);
 
     Queue q={NULL,NULL};
     int zi=1;

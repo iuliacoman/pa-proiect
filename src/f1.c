@@ -2,7 +2,6 @@
 
 //cream un nod si il adaugam in lista
 void addAtEnd ( Node ** head , double val){
-Node *aux = * head ;
 Node * newNode = ( Node *) malloc ( sizeof ( Node ));
 newNode->valoare = val; 
 newNode->next=NULL;
@@ -11,6 +10,7 @@ if (* head == NULL ) {
     *head = newNode;
 }
 else { 
+Node *aux = * head ;
 while (aux->next != NULL ) aux = aux->next ;
 //calculam randamentul conform formulei
 newNode->randament = (newNode->valoare - aux->valoare)/aux->valoare;

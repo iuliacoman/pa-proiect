@@ -29,11 +29,11 @@ struct Q{
 };
 typedef struct Q Queue ;
 
-int isEmpty(StackNode *top);
+int isEmpty(const StackNode *top);
 void push(StackNode **top, double val);
 double pop(StackNode **top);
-Queue *createQueue();
+//Queue *createQueue();
 void enqueue(Queue *q, int zi, double dif, char *nume);
 void verificare(int zi, double p1, double p2, double p3, char *nume1, char *nume2, char *nume3, Queue *q);
 void citirePiata(FILE *fin, StackNode **top, char *nume);
-void rezolvareTask2(char *inputFile, char *outputFile);
+void rezolvareTask2(const char *inputFile, const char *outputFile);

@@ -1,15 +1,18 @@
 #include "task1.h"
 
-void rezolvareTask1(int argc, char *argv[])
+void rezolvareTask1(int argc, const char *argv[])
 {
-    if (argc < 3) return 1;
+    if (argc < 3) return;
     FILE *fin = fopen(argv[1],"r");
     FILE *fout = fopen(argv[2],"w");
-    if (!fin || !fout) return 1;
+    if (!fin || !fout) return;
 
     int N;
-    if (fscanf(fin,"%d",&N)!=1) return 1;
-
+    if (fscanf(fin,"%d",&N)!=1) {
+        fclose(fin); 
+        fclose(fout);
+        return;
+    }
     Node *head=NULL;
 
     //citim valorile si le adaugam in lista
