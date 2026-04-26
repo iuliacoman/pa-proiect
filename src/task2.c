@@ -76,7 +76,7 @@ void citirePiata(FILE *fin, StackNode **top){
 
 void rezolvareTask2(const char *inputFile, const char *outputFile){
     FILE *fin=fopen(inputFile,"r");
-    FILE *fout=fopen(outputFile,"w");
+    FILE *fout=fopen(outputFile,"a");
     if (!fin || !fout) {
         printf("eroare!!!!");
         return;}
@@ -84,13 +84,13 @@ void rezolvareTask2(const char *inputFile, const char *outputFile){
     char nume1[30], nume2[30], nume3[30];
     StackNode *s1=NULL, *s2=NULL, *s3=NULL;
     //citire piata 1
-    if (fscanf(fin,"%29s",nume1)!=EOF)
+    if (fscanf(fin," %29[^\n]",nume1)!=EOF)
         citirePiata(fin,&s1);
     //citire piata 2
-    if (fscanf(fin,"%29s",nume2)!=EOF)
+    if (fscanf(fin," %29[^\n]",nume2)!=EOF)
         citirePiata(fin,&s2);
     //citire piata 3
-    if (fscanf(fin,"%29s",nume3)!=EOF)
+    if (fscanf(fin," %29[^\n]",nume3)!=EOF)
         citirePiata(fin,&s3);
 
     Queue q={NULL,NULL};
