@@ -103,6 +103,7 @@ void rezolvareTask2(const char *inputFile, const char *outputFile){
         free(temp);
     }
 
+    //eliberam memoria
     while (s1) pop(&s1);
     while (s2) pop(&s2);
     while (s3) pop(&s3);

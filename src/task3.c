@@ -16,8 +16,6 @@ void addStockToList(StockList **head, const char *symbol) {
     strncpy(newNode->symbol, symbol, MAX_SYM - 1);
     newNode->symbol[MAX_SYM - 1] = '\0';
     newNode->next = NULL;
-
-    // Inserăm mereu la FINAL pentru a păstra ordinea naturală din input
     if (*head == NULL) {
         *head = newNode;
     } else {
@@ -163,12 +161,9 @@ void rezolvareTask3(const char *f1, const char *f2) {
     TreeNode *root = createNode(0);
     construireArbore(root, prices, nrZile, s);
 
-    // Variabilă flag pentru a controla enter-urile dintre linii
+    // Variabilă pentru a controla enter-urile dintre linii
     int prima_linie = 1;
 
-    // ====================================================================
-    // DETERMINAREA OGLINDITULUI FĂRĂ ENTER LA FINAL
-    // ====================================================================
     for (int j = 0; j < 10; j++) {
         TreeNode *current = root;
         int gasit_opus = 1;
@@ -186,7 +181,7 @@ void rezolvareTask3(const char *f1, const char *f2) {
             break;
         }
     } else if (d < 0.0) {
-        // Scădere pură -> Mergem la dreapta pentru a găsi opusul (creșterea)
+        // Scădere -> Mergem la dreapta pentru a găsi opusul (creșterea)
         if (current->right) {
             current = current->right;
         } else {
@@ -194,7 +189,7 @@ void rezolvareTask3(const char *f1, const char *f2) {
             break;
         }
     } else {
-        // Creștere pură -> Mergem la stânga pentru a găsi opusul (scăderea)
+        // Creștere -> Mergem la stânga pentru a găsi opusul (scăderea)
         if (current->left) {
             current = current->left;
         } else {
@@ -211,8 +206,7 @@ void rezolvareTask3(const char *f1, const char *f2) {
                 int idx_opus = index_actiune(it->symbol, s);
                 
                 if (j < idx_opus) {
-                    // Dacă NU este prima linie pe care o scriem în fișier, 
-                    // punem un enter înaintea ei ca să o separăm de cea precedentă
+                
                     if (!prima_linie) {
                         fprintf(fout, "\n");
                     }
@@ -227,8 +221,7 @@ void rezolvareTask3(const char *f1, const char *f2) {
             }
         }
     }
-    // ====================================================================
-
+    
     for (int i = 0; i < nrZile; i++) free(prices[i]);
     free(prices);
     freeTree(root);
