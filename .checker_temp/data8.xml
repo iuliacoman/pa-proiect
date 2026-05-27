@@ -12,8 +12,8 @@
   <line>Command: /mnt/c/Users/iulia/Desktop/project-data-main/gigiquant/test /mnt/c/Users/iulia/Desktop/project-data-main/gigiquant/in/data8.in /mnt/c/Users/iulia/Desktop/project-data-main/gigiquant/out/data8.out</line>
 </preamble>
 
-<pid>10858</pid>
-<ppid>10832</ppid>
+<pid>19249</pid>
+<ppid>19238</ppid>
 <tool>memcheck</tool>
 
 <args>
@@ -32,13 +32,13 @@
 
 <status>
   <state>RUNNING</state>
-  <time>00:00:00:00.122 </time>
+  <time>00:00:00:00.150 </time>
 </status>
 
 
 <status>
   <state>FINISHED</state>
-  <time>00:00:00:01.777 </time>
+  <time>00:00:00:01.926 </time>
 </status>
 
 <errorcounts>

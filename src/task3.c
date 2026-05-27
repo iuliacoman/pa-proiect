@@ -1,5 +1,6 @@
 #include "task3.h"
 
+// Alocarea dinamică a unui nod în arbore
 TreeNode* createNode(int depth) {
     TreeNode* node = (TreeNode*)malloc(sizeof(TreeNode));
     if (node == NULL) return NULL;
@@ -10,6 +11,7 @@ TreeNode* createNode(int depth) {
     return node;
 }
 
+// Inserarea unui element la finalul listei înlănțuite pentru a păstra ordinea cronologică
 void addStockToList(StockList **head, const char *symbol) {
     StockList *newNode = (StockList*)malloc(sizeof(StockList));
     if (!newNode) return;
@@ -27,6 +29,7 @@ void addStockToList(StockList **head, const char *symbol) {
     }
 }
 
+// Ne ocupăm de citirea acțiunilor
 double** citireActiuni(FILE *fin, int *z, char s[10][MAX_SYM]) {
     char line[256];
     if (fgets(line, sizeof(line), fin)) {
@@ -45,9 +48,10 @@ double** citireActiuni(FILE *fin, int *z, char s[10][MAX_SYM]) {
 
     int nrZile = 0;
     int cap = 10;
+    //alocăm tabloul bidimensional pentru matricea de prețuri
     double **prices = (double**)malloc(10 * sizeof(double*));
     if (!prices) { *z = 0; return NULL; }
-
+    // Realocăm dinamic memoria dacă indexul curent depășește capacitatea bufferului
     for (;;) {
         if (nrZile >= cap) {
             cap *= 2;
@@ -61,6 +65,7 @@ double** citireActiuni(FILE *fin, int *z, char s[10][MAX_SYM]) {
             prices = temp;
         }
 
+        // Alocăm memorie pentru vectorul reprezentând linia curentă (cele 10 prețuri ale zilei)
         double *row = (double*)malloc(10 * sizeof(double));
         if (!row) {
             for (int i = 0; i < nrZile; i++) free(prices[i]);
@@ -80,6 +85,7 @@ double** citireActiuni(FILE *fin, int *z, char s[10][MAX_SYM]) {
             }
         }
 
+        // Verificăm dacă linia este completă și are exact cele 10 observații necesare
         if (k == 10) {
             prices[nrZile] = row;
             nrZile++;
@@ -89,16 +95,21 @@ double** citireActiuni(FILE *fin, int *z, char s[10][MAX_SYM]) {
         }
     }
     *z = nrZile;
+    // Actualizăm numărul de zile prin pointer
     return prices;
 }
 
+// Popularea și generarea arborelui binar
 void construireArbore(TreeNode *root, double **prices, int nrZile, char s[10][MAX_SYM]) {
     if (!root || nrZile <= 1) return;
     
     for (int j = 0; j < 10; j++) { 
+        // Inițializăm un pointer de navigare de la rădăcina arborelui
         TreeNode *current = root;
+        // Analizăm diferențele de preț dintre zile consecutive
         for (int i = 1; i < nrZile; i++) {
             double d = prices[i][j] - prices[i-1][j];
+            // Calculul variației matematice
             if (d <= 0) {
                 if (!current->left) current->left = createNode(i);
                 current = current->left;
@@ -125,6 +136,7 @@ void freeTree(TreeNode *root) {
     free(root);
 }
 
+// Determinarea indexului de aliniere
 int index_actiune(const char *symbol, const char s[10][MAX_SYM]) {
     for (int i = 0; i < 10; i++) {
         if (strncmp(symbol, s[i], MAX_SYM) == 0) {
@@ -147,6 +159,7 @@ void rezolvareTask3(const char *f1, const char *f2) {
 
     char s[10][MAX_SYM];
     int nrZile = 0;
+    // Încărcarea matricei de date din fișier
     double **prices = citireActiuni(fin, &nrZile, s);
     if (!prices || nrZile <= 1) {
         if (prices) {
@@ -164,10 +177,12 @@ void rezolvareTask3(const char *f1, const char *f2) {
     // Variabilă pentru a controla enter-urile dintre linii
     int prima_linie = 1;
 
+    // Algoritmul de identificare a comportamentului inversat (Oglindit)
     for (int j = 0; j < 10; j++) {
         TreeNode *current = root;
         int gasit_opus = 1;
 
+        // Reanalizăm calea simetrică a istoricului
         for (int i = 1; i < nrZile; i++) {
             double d = prices[i][j] - prices[i-1][j];
             
@@ -200,11 +215,12 @@ void rezolvareTask3(const char *f1, const char *f2) {
 
         }
 
+        // Dacă subarborele simetric a fost validat complet și conține elemente
         if (gasit_opus && current && current->stocks) {
             StockList *it = current->stocks;
             while (it != NULL) {
                 int idx_opus = index_actiune(it->symbol, s);
-                
+                // Condiție pentru unicitatea relațiilor
                 if (j < idx_opus) {
                 
                     if (!prima_linie) {
@@ -213,8 +229,6 @@ void rezolvareTask3(const char *f1, const char *f2) {
                     
                     // Scriem perechea fără '\n' la sfârșit
                     fprintf(fout, "%s-%s", s[j], it->symbol);
-                    
-                    // Din acest moment, orice altă linie scrisă va avea nevoie de enter înainte
                     prima_linie = 0;
                 }
                 it = it->next;
